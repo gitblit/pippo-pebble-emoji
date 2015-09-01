@@ -46,4 +46,4 @@ pippo.getApplication().setTemplateEngine(new MyTemplateEngine(application.getRou
 
 **Use the filter.**
 
-    {{ ":coffee: Java is my favorite language!" | emoji }}
+    {{ ":coffee: Java is my favorite language!" | emoji | raw }}

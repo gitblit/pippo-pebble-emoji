@@ -64,7 +64,7 @@ public class EmojiExtension extends AbstractExtension {
                     }
 
                     String emojiUrl = router.uriFor(publicPattern, new HashMap<String, Object>() {{
-                        put(ResourceHandler.PATH_PARAMETER, "/emoji/{0}.png");
+                        put(ResourceHandler.PATH_PARAMETER, "emoji/{0}.png");
                     }});
                     imgUrlPattern = "<img class='emoji' src=\"" + emojiUrl + "\" title='':{1}:'' alt='':{1}:''></img>";
 
