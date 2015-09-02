@@ -42,3 +42,4 @@ pippo.getApplication().setTemplateEngine(new MyTemplateEngine());
 **Use the filter.**
 
     {{ ":coffee: Java is my favorite language!" | emoji | raw }}
+    {{ ":coffee: Java is my favorite language!" | emoji('cssclass') | raw }}

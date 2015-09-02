@@ -2,12 +2,12 @@ package com.gitblit.pippo.emoji;
 
 import com.mitchellbosecke.pebble.extension.AbstractExtension;
 import com.mitchellbosecke.pebble.extension.Filter;
-import com.mitchellbosecke.pebble.extension.escaper.RawFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ro.pippo.core.route.PublicResourceHandler;
 import ro.pippo.core.route.ResourceHandler;
 import ro.pippo.core.route.Router;
+import ro.pippo.core.util.StringUtils;
 
 import java.text.MessageFormat;
 import java.util.Collections;
@@ -37,7 +37,7 @@ public class EmojiExtension extends AbstractExtension {
         return filters;
     }
 
-    public class EmojiFilter extends RawFilter {
+    public class EmojiFilter implements Filter {
 
         private final Pattern emojiPattern = Pattern.compile(":([\\w\\s-]+):");
 
@@ -49,10 +49,19 @@ public class EmojiExtension extends AbstractExtension {
             this.router = router;
         }
 
+        public List<String> getArgumentNames() {
+            return Collections.singletonList("class");
+        }
+
         @Override
         public Object apply(Object input, Map<String, Object> args) {
             if (input == null) {
                 return null;
+            }
+
+            String imgClass = (String) args.get("class");
+            if (StringUtils.isNullOrEmpty(imgClass)) {
+                imgClass = "emoji";
             }
 
             synchronized (this) {
@@ -64,9 +73,9 @@ public class EmojiExtension extends AbstractExtension {
                     }
 
                     String emojiUrl = router.uriFor(publicPattern, new HashMap<String, Object>() {{
-                        put(ResourceHandler.PATH_PARAMETER, "emoji/{0}.png");
+                        put(ResourceHandler.PATH_PARAMETER, "emoji/{1}.png");
                     }});
-                    imgUrlPattern = "<img class='emoji' src=\"" + emojiUrl + "\" title='':{1}:'' alt='':{1}:''></img>";
+                    imgUrlPattern = "<img class=\"{0}\" src=\"" + emojiUrl + "\" title='':{2}:'' alt='':{2}:''></img>";
 
                     log.debug("Emoji img url pattern \"{}\"", imgUrlPattern);
                 }
@@ -78,7 +87,7 @@ public class EmojiExtension extends AbstractExtension {
             Matcher m = emojiPattern.matcher(input.toString());
             while (m.find()) {
                 String code = m.group(1);
-                m.appendReplacement(sb, MessageFormat.format(imgUrlPattern, code, code));
+                m.appendReplacement(sb, MessageFormat.format(imgUrlPattern, imgClass, code, code));
             }
             m.appendTail(sb);
             return sb.toString();
