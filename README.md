@@ -24,15 +24,10 @@ pippo.getApplication().addPublicResourceRoute();
 
 ```java
 public class MyEngine extends PebbleTemplateEngine {
-    private final Router router;
-
-    public MyEngine(Router router) {
-        this.router = router;
-    }
 
     @Override
-    protected void init(PebbleEngine engine) {
-        engine.addExtension(new EmojiExtension(router));
+    protected void init(Application application, PebbleEngine engine) {
+        engine.addExtension(new EmojiExtension(application.getRouter()));
     }
 }
 ```
@@ -41,7 +36,7 @@ public class MyEngine extends PebbleTemplateEngine {
 
 ```java
 Pippo pippo = new Pippo();
-pippo.getApplication().setTemplateEngine(new MyTemplateEngine(application.getRouter()));
+pippo.getApplication().setTemplateEngine(new MyTemplateEngine());
 ```
 
 **Use the filter.**
