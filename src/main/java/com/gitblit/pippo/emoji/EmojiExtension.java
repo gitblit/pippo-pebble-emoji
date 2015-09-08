@@ -39,7 +39,7 @@ public class EmojiExtension extends AbstractExtension {
 
     public class EmojiFilter implements Filter {
 
-        private final Pattern emojiPattern = Pattern.compile(":([\\w\\s-]+):");
+        private final Pattern emojiPattern = Pattern.compile(":([\\w_+-]+):");
 
         private final Router router;
 
@@ -86,7 +86,7 @@ public class EmojiExtension extends AbstractExtension {
             StringBuffer sb = new StringBuffer();
             Matcher m = emojiPattern.matcher(input.toString());
             while (m.find()) {
-                String code = m.group(1);
+                String code = m.group(1).trim();
                 m.appendReplacement(sb, MessageFormat.format(imgUrlPattern, imgClass, code, code));
             }
             m.appendTail(sb);
