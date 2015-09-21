@@ -10,14 +10,14 @@
     <description>a Pebble filter for Pippo for emoji parsing</description>
     <url>https://github.com/gitblit/pippo-pebble-emoji</url>
 
-    <dependencies>
-        <dependency>
-            <groupId>ro.pippo</groupId>
-            <artifactId>pippo-pebble</artifactId>
-            <version>0.6.1</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <scm>
         <connection>scm:git:https://github.com/gitblit/pippo-pebble-emoji.git</connection>
@@ -142,5 +142,14 @@
             </build>
         </profile>
     </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>ro.pippo</groupId>
+            <artifactId>pippo-pebble</artifactId>
+            <version>0.6.1</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
 </project>
