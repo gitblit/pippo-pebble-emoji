@@ -1,7 +1,6 @@
 package com.gitblit.pippo.emoji;
 
 import com.google.common.io.CharStreams;
-import com.google.common.io.Files;
 import com.mitchellbosecke.pebble.extension.AbstractExtension;
 import com.mitchellbosecke.pebble.extension.Filter;
 import org.slf4j.Logger;
@@ -15,10 +14,9 @@ import ro.pippo.core.util.StringUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -63,7 +61,7 @@ public class EmojiExtension extends AbstractExtension {
         }
 
         public List<String> getArgumentNames() {
-            return Collections.singletonList("class");
+            return Arrays.asList("class", "inline", "fixed");
         }
 
         @Override
@@ -72,6 +70,8 @@ public class EmojiExtension extends AbstractExtension {
                 return null;
             }
 
+            boolean inline = (Boolean) args.getOrDefault("inline", false);
+            boolean fixed = (Boolean) args.getOrDefault("fixed", false);
             String imgClass = (String) args.get("class");
             if (StringUtils.isNullOrEmpty(imgClass)) {
                 imgClass = "emoji";
@@ -88,7 +88,19 @@ public class EmojiExtension extends AbstractExtension {
                     String emojiUrl = router.uriFor(publicPattern, new HashMap<String, Object>() {{
                         put(ResourceHandler.PATH_PARAMETER, "emoji/{1}.png");
                     }});
-                    imgUrlPattern = "<img class=\"{0}\" src=\"" + emojiUrl + "\" title='':{2}:'' alt='':{2}:''></img>";
+                    if (inline) {
+                        imgUrlPattern = "<img style=\"" +
+                                "width: 1.5em;" +
+                                "height: 1.5em;" +
+                                "display: inline-block;" +
+                                "vertical-align: middle;" +
+                                "margin-bottom: 0.25em;" +
+                                "\" src=\"" + emojiUrl + "\" title='':{2}:'' alt='':{2}:''></img>";
+                    } else if (fixed) {
+                        imgUrlPattern = "<img width=\"20px\" height=\"20px\" src=\"" + emojiUrl + "\" title='':{2}:'' alt='':{2}:''></img>";
+                    } else {
+                        imgUrlPattern = "<img class=\"{0}\" src=\"" + emojiUrl + "\" title='':{2}:'' alt='':{2}:''></img>";
+                    }
 
                     log.debug("Emoji img url pattern \"{}\"", imgUrlPattern);
                 }
