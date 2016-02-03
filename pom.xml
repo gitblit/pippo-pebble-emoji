@@ -4,7 +4,7 @@
 
     <groupId>com.gitblit.pippo</groupId>
     <artifactId>pippo-pebble-emoji</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>Pippo Pebble emoji filter</name>
     <description>a Pebble filter for Pippo for emoji parsing</description>
     <url>https://github.com/gitblit/pippo-pebble-emoji</url>
@@ -21,7 +21,7 @@
         <url>https://github.com/gitblit/pippo-pebble-emoji</url>
         <connection>scm:git:https://github.com/gitblit/pippo-pebble-emoji.git</connection>
         <developerConnection>scm:git:git@github.com:gitblit/pippo-pebble-emoji.git</developerConnection>
-        <tag>release-1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
