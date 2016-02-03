@@ -23,7 +23,7 @@ public class EmojiExtensionTest extends Assert {
     public void setup() {
         PublicResourceHandler handler = new PublicResourceHandler("/public");
         DefaultRouter router = new DefaultRouter();
-        router.addRoute(new Route(handler.getUriPattern(), "GET", handler));
+        router.addRoute(new Route("GET", handler.getUriPattern(), handler));
         EmojiExtension ext = new EmojiExtension(router);
         filter = (EmojiExtension.EmojiFilter) ext.getFilters().get("emoji");
     }
